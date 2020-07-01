@@ -8,6 +8,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.LiteralText;
+import xyz.commandblockguy.noteblockplayer.NoteBlockPlayer;
+import xyz.commandblockguy.noteblockplayer.player.Player;
+
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import java.io.File;
+import java.io.IOException;
 
 public class MainGUI extends LightweightGuiDescription {
     @Environment(EnvType.CLIENT)
@@ -21,7 +29,15 @@ public class MainGUI extends LightweightGuiDescription {
         WButton accept = new WButton(new LiteralText("Play"));
         accept.setOnClick(() -> {
             System.out.println("Button was pressed.");
-            MinecraftClient.getInstance().openScreen(null);
+            try {
+                Player player = NoteBlockPlayer.player;
+                //player.openFile(new File("/home/john/Downloads/The_Lick.mid"));
+                MidiSystem.getTransmitter().setReceiver(player.receiver);
+                player.play();
+            } catch (/*InvalidMidiDataException | IOException | */MidiUnavailableException e) {
+                e.printStackTrace();
+            }
+            //MinecraftClient.getInstance().openScreen(null);
         });
         root.add(accept, 8, 6, 2, 1);
 

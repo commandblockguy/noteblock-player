@@ -11,13 +11,17 @@ import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 import xyz.commandblockguy.noteblockplayer.gui.MainGUI;
+import xyz.commandblockguy.noteblockplayer.player.Player;
 
 public class NoteBlockPlayer implements ModInitializer {
 	private static KeyBinding keyBinding;
+	public static Player player;
 
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void onInitialize() {
+		player = new Player();
+
 		keyBinding = new KeyBinding(
 				"key.noteblockplayer.menu",
 				InputUtil.Type.KEYSYM,
@@ -31,6 +35,7 @@ public class NoteBlockPlayer implements ModInitializer {
 			if(keyBinding.wasPressed()) {
 				MinecraftClient.getInstance().openScreen(new CottonClientScreen(new MainGUI()));
 			}
+			player.tick();
 		});
 
 		System.out.println("NoteBlockPlayer initialized.");
