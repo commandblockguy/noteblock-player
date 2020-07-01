@@ -37,7 +37,7 @@ public class MainGUI extends LightweightGuiDescription {
             } catch (/*InvalidMidiDataException | IOException | */MidiUnavailableException e) {
                 e.printStackTrace();
             }
-            //MinecraftClient.getInstance().openScreen(null);
+            MinecraftClient.getInstance().openScreen(null);
         });
         root.add(accept, 8, 6, 2, 1);
 
