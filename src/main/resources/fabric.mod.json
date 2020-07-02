@@ -14,7 +14,7 @@
 
   "icon": "assets/noteblockplayer/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
       "xyz.commandblockguy.noteblockplayer.NoteBlockPlayer"
