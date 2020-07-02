@@ -17,7 +17,6 @@ public class MIDIReceiver implements Receiver {
         if(midiMessage instanceof ShortMessage) {
             ShortMessage msg = (ShortMessage)midiMessage;
             if(msg.getCommand() == ShortMessage.NOTE_ON && msg.getData2() > 0) {
-                System.out.println("NoteOn event: " + msg.getData1() + ", " + msg.getData2());
                 queue.add(msg.getData1());
             }
         }

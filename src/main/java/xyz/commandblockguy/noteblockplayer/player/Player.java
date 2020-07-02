@@ -70,12 +70,16 @@ public class Player {
             sequencer.start();
     }
 
+    public void stop() {
+        if(sequencer != null)
+            sequencer.stop();
+    }
+
     public void tick() {
         Integer note;
         while(true) {
             note = queue.poll();
             if(note == null) break;
-            System.out.println("Playing note " + note);
             BlockPos pos = playableBlocks.get(note);
             playBlock(pos);
         }
@@ -102,8 +106,6 @@ public class Player {
                     int midi_note = raw_note + instrumentPitches.get(instrument);
 
                     map.put(midi_note, pos);
-
-                    //System.out.println("Found block at " + x + ", " + y + ", " + z + " - " + midi_note + ", " + instrument);
                 }
             }
         }
