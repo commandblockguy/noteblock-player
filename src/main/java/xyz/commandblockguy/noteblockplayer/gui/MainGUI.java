@@ -20,6 +20,7 @@ import javax.sound.midi.MidiUnavailableException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -41,6 +42,7 @@ public class MainGUI extends LightweightGuiDescription {
             return;
         }
         fileNameList = fileNameList.stream().filter((s) -> s.endsWith(".mid") || s.endsWith(".midi")).collect(Collectors.toList());
+        Collections.sort(fileNameList);
 
         BiConsumer<String, FileElement> configurator = (String s, FileElement elem) -> {
             elem.filename = s;
