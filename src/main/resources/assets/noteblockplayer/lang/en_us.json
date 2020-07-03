@@ -4,5 +4,6 @@
   "text.noteblockplayer.menu_title": "Play MIDI:",
   "text.noteblockplayer.play_file": "Play file",
   "text.noteblockplayer.play_device": "Play from device",
-  "text.noteblockplayer.stop": "Stop"
+  "text.noteblockplayer.stop": "Stop",
+  "text.noteblockplayer.creative": "Cannot manually play note blocks in creative mode."
 }

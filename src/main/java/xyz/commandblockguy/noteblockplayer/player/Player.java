@@ -54,6 +54,7 @@ public class Player {
     }
 
     public void openFile(File file) throws MidiUnavailableException, InvalidMidiDataException, IOException {
+        stop();
         sequencer = MidiSystem.getSequencer(false);
         if(sequencer == null) {
             throw new MidiUnavailableException();
@@ -71,8 +72,11 @@ public class Player {
     }
 
     public void stop() {
-        if(sequencer != null)
+        if(sequencer != null) {
             sequencer.stop();
+            sequencer.close();
+            sequencer = null;
+        }
     }
 
     public void tick() {
@@ -115,6 +119,7 @@ public class Player {
 
     private void playBlock(BlockPos pos) {
         if(pos == null) return;
+        if(MinecraftClient.getInstance().player.abilities.creativeMode) return;
         PlayerActionC2SPacket packet1 = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, pos, Direction.UP);
         PlayerActionC2SPacket packet2 = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, pos, Direction.UP);
         MinecraftClient.getInstance().getNetworkHandler().sendPacket(packet1);

@@ -1,5 +1,6 @@
 package xyz.commandblockguy.noteblockplayer.gui;
 
+import io.github.cottonmc.cotton.gui.client.CottonClientScreen;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
@@ -62,6 +63,7 @@ public class MainGUI extends LightweightGuiDescription {
         acceptDevice.setOnClick(() -> {
             try {
                 Player player = NoteBlockPlayer.player;
+                player.stop();
                 MidiSystem.getTransmitter().setReceiver(player.receiver);
                 player.play();
             } catch (MidiUnavailableException e) {
@@ -97,5 +99,14 @@ public class MainGUI extends LightweightGuiDescription {
             if(!dir.mkdir()) return new ArrayList<>();
         }
         return getFilesRecursive(dir);
+    }
+
+    public static void open() {
+        MinecraftClient instance = MinecraftClient.getInstance();
+        if(instance.player.abilities.creativeMode) {
+            instance.player.sendMessage(new TranslatableText("text.noteblockplayer.creative"));
+        } else {
+            instance.openScreen(new CottonClientScreen(new MainGUI()));
+        }
     }
 }

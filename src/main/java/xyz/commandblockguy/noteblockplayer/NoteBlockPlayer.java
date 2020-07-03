@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.TranslatableText;
 import org.lwjgl.glfw.GLFW;
 import xyz.commandblockguy.noteblockplayer.gui.MainGUI;
 import xyz.commandblockguy.noteblockplayer.player.Player;
@@ -32,9 +33,7 @@ public class NoteBlockPlayer implements ModInitializer {
 		KeyBindingHelper.registerKeyBinding(keyBinding);
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if(keyBinding.wasPressed()) {
-				MinecraftClient.getInstance().openScreen(new CottonClientScreen(new MainGUI()));
-			}
+			if(keyBinding.wasPressed()) MainGUI.open();
 			player.tick();
 		});
 
