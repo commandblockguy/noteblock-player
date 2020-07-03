@@ -5,5 +5,6 @@
   "text.noteblockplayer.play_file": "Play file",
   "text.noteblockplayer.play_device": "Play from device",
   "text.noteblockplayer.stop": "Stop",
-  "text.noteblockplayer.creative": "Cannot manually play note blocks in creative mode."
+  "text.noteblockplayer.creative": "Cannot manually play note blocks in creative mode.",
+  "text.noteblockplayer.error_open": "Failed to open file. Check latest.log for more details."
 }

@@ -34,7 +34,13 @@ public class MainGUI extends LightweightGuiDescription {
         WLabel title = new WLabel(new TranslatableText("text.noteblockplayer.menu_title"));
         root.add(title, 0, 0, 3, 1);
 
-        List<String> fileNameList = getFileList().stream().filter((s) -> s.endsWith(".mid") || s.endsWith(".midi")).collect(Collectors.toList());
+        List<String> fileNameList = getFileList();
+        if(fileNameList == null) {
+            MinecraftClient.getInstance().player.sendMessage(new TranslatableText("text.noteblockplayer.error_open"));
+            close();
+            return;
+        }
+        fileNameList = fileNameList.stream().filter((s) -> s.endsWith(".mid") || s.endsWith(".midi")).collect(Collectors.toList());
 
         BiConsumer<String, FileElement> configurator = (String s, FileElement elem) -> {
             elem.filename = s;
@@ -52,9 +58,10 @@ public class MainGUI extends LightweightGuiDescription {
                     player.openFile(new File(selectedFile));
                     player.play();
                 } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+                    MinecraftClient.getInstance().player.sendMessage(new TranslatableText("text.noteblockplayer.error_open"));
                     e.printStackTrace();
                 }
-                MinecraftClient.getInstance().openScreen(null);
+                close();
             }
         });
         root.add(accept, 12, 8, 3, 1);
@@ -67,9 +74,10 @@ public class MainGUI extends LightweightGuiDescription {
                 MidiSystem.getTransmitter().setReceiver(player.receiver);
                 player.play();
             } catch (MidiUnavailableException e) {
+                MinecraftClient.getInstance().player.sendMessage(new TranslatableText("text.noteblockplayer.error_open"));
                 e.printStackTrace();
             }
-            MinecraftClient.getInstance().openScreen(null);
+            close();
         });
         root.add(acceptDevice, 7, 8, 5, 1);
 
@@ -96,7 +104,9 @@ public class MainGUI extends LightweightGuiDescription {
     static List<String> getFileList() {
         File dir = new File("./midi");
         if(!dir.exists()) {
-            if(!dir.mkdir()) return new ArrayList<>();
+            if(!dir.mkdir()) {
+                return null;
+            }
         }
         return getFilesRecursive(dir);
     }
@@ -108,5 +118,9 @@ public class MainGUI extends LightweightGuiDescription {
         } else {
             instance.openScreen(new CottonClientScreen(new MainGUI()));
         }
+    }
+
+    void close() {
+        MinecraftClient.getInstance().openScreen(null);
     }
 }
