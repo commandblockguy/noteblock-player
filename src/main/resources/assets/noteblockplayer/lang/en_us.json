@@ -1,0 +1,8 @@
+{
+  "category.noteblockplayer.main": "NoteBlock Player",
+  "key.noteblockplayer.menu": "Open Play Menu",
+  "text.noteblockplayer.menu_title": "Play MIDI:",
+  "text.noteblockplayer.play_file": "Play file",
+  "text.noteblockplayer.play_device": "Play from device",
+  "text.noteblockplayer.stop": "Stop"
+}

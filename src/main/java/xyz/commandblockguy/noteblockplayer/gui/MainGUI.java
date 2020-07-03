@@ -9,6 +9,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import xyz.commandblockguy.noteblockplayer.NoteBlockPlayer;
 import xyz.commandblockguy.noteblockplayer.player.Player;
 
@@ -29,7 +30,7 @@ public class MainGUI extends LightweightGuiDescription {
         WGridPanel root = new WGridPanel();
         setRootPanel(root);
 
-        WLabel title = new WLabel(new LiteralText("Play MIDI:"));
+        WLabel title = new WLabel(new TranslatableText("text.noteblockplayer.menu_title"));
         root.add(title, 0, 0, 3, 1);
 
         List<String> fileNameList = getFileList().stream().filter((s) -> s.endsWith(".mid") || s.endsWith(".midi")).collect(Collectors.toList());
@@ -42,7 +43,7 @@ public class MainGUI extends LightweightGuiDescription {
         WListPanel<String, FileElement> list = new WListPanel<>(fileNameList, FileElement::new, configurator);
         root.add(list, 0, 1, 15, 7);
 
-        WButton accept = new WButton(new LiteralText("Play file"));
+        WButton accept = new WButton(new TranslatableText("text.noteblockplayer.play_file"));
         accept.setOnClick(() -> {
             if(selectedFile != null) {
                 try {
@@ -57,7 +58,7 @@ public class MainGUI extends LightweightGuiDescription {
         });
         root.add(accept, 12, 8, 3, 1);
 
-        WButton acceptDevice = new WButton(new LiteralText("Play from device"));
+        WButton acceptDevice = new WButton(new TranslatableText("text.noteblockplayer.play_device"));
         acceptDevice.setOnClick(() -> {
             try {
                 Player player = NoteBlockPlayer.player;
@@ -70,7 +71,7 @@ public class MainGUI extends LightweightGuiDescription {
         });
         root.add(acceptDevice, 7, 8, 5, 1);
 
-        WButton stop = new WButton(new LiteralText("Stop"));
+        WButton stop = new WButton(new TranslatableText("text.noteblockplayer.stop"));
         stop.setOnClick(() -> NoteBlockPlayer.player.stop());
         root.add(stop, 0, 8, 2, 1);
 
