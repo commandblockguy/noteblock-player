@@ -26,6 +26,10 @@ public class Player {
     ConcurrentLinkedQueue<Integer> queue;
     HashMap<Integer, BlockPos> playableBlocks;
 
+    int SNARE = 128;
+    int HAT = 129;
+    int BASEDRUM = 130;
+
     static {
         int F_SHARP0 = 18;
         int OCTAVE = 12;
@@ -84,6 +88,25 @@ public class Player {
         while(true) {
             note = queue.poll();
             if(note == null) break;
+            if(note > 127) {
+                switch(note - 128) {
+                    case 38: // Acoustic Snare
+                    case 40: // Electric Snare
+                        note = SNARE;
+                        break;
+                    case 33: // Metronome Click
+                    case 37: // Side Stick
+                    case 39: // Hand Clap
+                    case 42: // Closed Hi-Hat
+                    case 44: // Pedal Hi-Hat
+                    case 46: // Open Hi-Hat
+                        note = HAT;
+                        break;
+                    default:
+                        note = BASEDRUM;
+                        break;
+                }
+            }
             BlockPos pos = playableBlocks.get(note);
             playBlock(pos);
         }
@@ -107,7 +130,21 @@ public class Player {
                     int raw_note = state.get(NoteBlock.NOTE);
                     Instrument instrument = state.get(NoteBlock.INSTRUMENT);
 
-                    int midi_note = raw_note + instrumentPitches.get(instrument);
+                    int midi_note;
+
+                    switch(instrument) {
+                        case SNARE:
+                            midi_note = SNARE;
+                            break;
+                        case HAT:
+                            midi_note = HAT;
+                            break;
+                        case BASEDRUM:
+                            midi_note = BASEDRUM;
+                            break;
+                        default:
+                            midi_note = raw_note + instrumentPitches.get(instrument);
+                    }
 
                     map.put(midi_note, pos);
                 }

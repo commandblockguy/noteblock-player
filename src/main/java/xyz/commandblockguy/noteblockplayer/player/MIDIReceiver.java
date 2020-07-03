@@ -17,7 +17,13 @@ public class MIDIReceiver implements Receiver {
         if(midiMessage instanceof ShortMessage) {
             ShortMessage msg = (ShortMessage)midiMessage;
             if(msg.getCommand() == ShortMessage.NOTE_ON && msg.getData2() > 0) {
-                queue.add(msg.getData1());
+                // Somewhat lazy way of encoding drum messages:
+                // If it's a drum message, just add 128 to it
+                if(msg.getChannel() == 9) {
+                    queue.add(128 + msg.getData1());
+                } else {
+                    queue.add(msg.getData1());
+                }
             }
         }
     }
