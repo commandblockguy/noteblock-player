@@ -18,7 +18,8 @@
   "entrypoints": {
     "main": [
       "xyz.commandblockguy.noteblockplayer.NoteBlockPlayer"
-    ]
+    ],
+    "cotton-client-commands": ["xyz.commandblockguy.noteblockplayer.Commands"]
   },
   "mixins": [
     "noteblockplayer.mixins.json"
@@ -27,6 +28,8 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.15.x"
+    "minecraft": "1.16.x",
+    "libgui": ">=2.3.0",
+    "cotton-client-commands": "^1.0.0"
   }
 }

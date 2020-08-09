@@ -37,7 +37,7 @@ public class MainGUI extends LightweightGuiDescription {
 
         List<String> fileNameList = getFileList();
         if(fileNameList == null) {
-            MinecraftClient.getInstance().player.sendMessage(new TranslatableText("text.noteblockplayer.error_open"));
+            MinecraftClient.getInstance().player.sendMessage(new TranslatableText("text.noteblockplayer.error_open"), true);
             close();
             return;
         }
@@ -60,7 +60,7 @@ public class MainGUI extends LightweightGuiDescription {
                     player.openFile(new File(selectedFile));
                     player.play();
                 } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-                    MinecraftClient.getInstance().player.sendMessage(new TranslatableText("text.noteblockplayer.error_open"));
+                    MinecraftClient.getInstance().player.sendMessage(new TranslatableText("text.noteblockplayer.error_open"), true);
                     e.printStackTrace();
                 }
                 close();
@@ -76,7 +76,7 @@ public class MainGUI extends LightweightGuiDescription {
                 MidiSystem.getTransmitter().setReceiver(player.receiver);
                 player.play();
             } catch (MidiUnavailableException e) {
-                MinecraftClient.getInstance().player.sendMessage(new TranslatableText("text.noteblockplayer.error_open"));
+                MinecraftClient.getInstance().player.sendMessage(new TranslatableText("text.noteblockplayer.error_open"), true);
                 e.printStackTrace();
             }
             close();
@@ -116,7 +116,7 @@ public class MainGUI extends LightweightGuiDescription {
     public static void open() {
         MinecraftClient instance = MinecraftClient.getInstance();
         if(instance.player.abilities.creativeMode) {
-            instance.player.sendMessage(new TranslatableText("text.noteblockplayer.creative"));
+            instance.player.sendMessage(new TranslatableText("text.noteblockplayer.creative"), true);
         } else {
             instance.openScreen(new CottonClientScreen(new MainGUI()));
         }
